@@ -38,7 +38,7 @@ HTMLFinder
 ### 1. 저장소 Clone
 
 ```bash
-git clone https://github.com/your-id/HTMLFinder.git
+git clone https://github.com/pueser/validation-tool/HTMLFinder.git
 ```
 
 ### 2. 프로젝트 이동
