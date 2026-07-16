@@ -122,7 +122,7 @@ FAIL    : 0
 ### 방법 1. Git Clone
 
 ```bash
-git clone https://github.com/<username>/<repository>.git
+git clone https://github.com/pueser/validation-tool/FontChecker.git
 ```
 
 ### 방법 2. ZIP 다운로드
