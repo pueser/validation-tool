@@ -88,7 +88,7 @@ node HtmlFinder.js "./output" "table[colsep='0']"
 ```css
 img
 
-div.note
+div.class
 
 table td
 
@@ -98,11 +98,11 @@ table tbody tr td
 
 table td img
 
-div.warning p
+div.class p
 
 table[colsep='0']
 
-div[class='notice']
+div[class='class']
 
 table td:first-child
 ```
