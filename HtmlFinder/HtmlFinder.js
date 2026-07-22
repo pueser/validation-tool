@@ -7,7 +7,23 @@ const selector = process.argv[3];
 
 if (!folder || !selector) {
     console.log("사용법:");
-    console.log('node HtmlFinder.js "HTML폴더" "CSS선택자"');
+    console.log('  node HtmlFinder.js HTML폴더 "CSS선택자"');
+    console.log("");
+
+    console.log("사용 가능한 커스텀 선택자");
+    console.log("----------------------------------------");
+
+    console.log(':pre(selector)');
+    console.log('  → 바로 이전 형제 요소가 selector인 경우');
+    console.log("");
+
+    console.log(':not-parent(selector)');
+    console.log('  → 지정한 selector 부모(조상)를 가지고 있지 않은 경우');
+    console.log("");
+    
+    console.log(':parent(selector)');
+    console.log('  → 지정한 selector 부모(조상)를 가지고 있는 경우');
+    
     process.exit(1);
 }
 
@@ -68,46 +84,40 @@ for (const file of htmlFiles) {
     let matches;
 
     try {
-
         // 위의 형제요소 탐색
         const prevMatch = selector.match(/^(.+):pre\((.+)\)$/);
-
-        // 부모 탐색
+        // 부모 탐색(없는경우)
         const notParentMatch = selector.match(/^(.+):not-parent\((.+)\)$/);
-
+        // 부모 탐색(있는경우)
+        const parentMatch = selector.match(/^(.+):parent\((.+)\)$/);
 
         if (prevMatch) {
-
-            const targetSelector = prevMatch[1]; // img
-            const prevSelector = prevMatch[2];   // div.break
+            const targetSelector = prevMatch[1]; 
+            const prevSelector = prevMatch[2];  
 
             matches = $(targetSelector).filter((i, el) => {
-
                 return $(el).prev(prevSelector).length > 0;
-
             });
-
-
         } else if (notParentMatch) {
-
-            const targetSelector = notParentMatch[1]; // img
-            const parentSelector = notParentMatch[2]; // .break
+            const targetSelector = notParentMatch[1]; 
+            const parentSelector = notParentMatch[2]; 
 
             matches = $(targetSelector).filter((i, el) => {
-
                 return $(el).closest(parentSelector).length === 0;
+            });
+        } else if (parentMatch) {
 
+            const targetSelector = parentMatch[1];
+            const parentSelector = parentMatch[2];
+
+            matches = $(targetSelector).filter((i, el) => {
+                return $(el).closest(parentSelector).length > 0;
             });
 
-
-        } else {
-
+        }else {
             matches = $(selector);
-
         }
-
     } catch (err) {
-
         console.log("잘못된 CSS 선택자입니다.");
         console.log(err.message);
         process.exit(1);
