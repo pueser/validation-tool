@@ -187,6 +187,27 @@ HTML 파일 수      : 15
 
 ---
 
+## 수정이력
+
+- 2026-07-22
+  - `:pre()` 선택자 추가
+    - 대상 요소의 **바로 이전 형제 요소**가 지정한 선택자와 일치하는 대상요소 확인
+    - 사용 예시
+      ```bash
+      node HtmlFinder.js "./html" "table:pre(img)"
+      ```
+      → 바로 앞 형제 요소가 `img`인 `table`을 검색
+
+  - `:not-parent()` 선택자 추가
+    - 대상 요소의 **상위 부모 요소**에 지정한 선택자가 없는 경우에 대상요소 확인
+    - 사용 예시
+      ```bash
+      node HtmlFinder.js "./html" "img:not-parent(ol)"
+      ```
+      → `ol` 요소 내부에 포함되지 않은 `img`를 검색
+
+---
+
 ## 라이선스
 
 MIT License
