@@ -68,8 +68,46 @@ for (const file of htmlFiles) {
     let matches;
 
     try {
-        matches = $(selector);
+
+        // 위의 형제요소 탐색
+        const prevMatch = selector.match(/^(.+):pre\((.+)\)$/);
+
+        // 부모 탐색
+        const notParentMatch = selector.match(/^(.+):not-parent\((.+)\)$/);
+
+
+        if (prevMatch) {
+
+            const targetSelector = prevMatch[1]; // img
+            const prevSelector = prevMatch[2];   // div.break
+
+            matches = $(targetSelector).filter((i, el) => {
+
+                return $(el).prev(prevSelector).length > 0;
+
+            });
+
+
+        } else if (notParentMatch) {
+
+            const targetSelector = notParentMatch[1]; // img
+            const parentSelector = notParentMatch[2]; // .break
+
+            matches = $(targetSelector).filter((i, el) => {
+
+                return $(el).closest(parentSelector).length === 0;
+
+            });
+
+
+        } else {
+
+            matches = $(selector);
+
+        }
+
     } catch (err) {
+
         console.log("잘못된 CSS 선택자입니다.");
         console.log(err.message);
         process.exit(1);
